@@ -1,9 +1,8 @@
 import concurrent.futures
 import socket
 
-def handle_client(sock, addr):
+def handle_client(sock, addr,data):
     try:
-        data, _ = sock.recvfrom(4096)
         decoded_data = data.decode('utf-8')
         print(f"Empfangen von {addr}: {decoded_data}")
 
@@ -22,7 +21,7 @@ def start_server():
         while True:
             try:
                 data, addr = sock.recvfrom(4096)
-                executor.submit(handle_client, sock, addr)
+                executor.submit(handle_client, sock, addr,data)
             except KeyboardInterrupt:
                 print("\nServer wird geschlossen.")
                 break
